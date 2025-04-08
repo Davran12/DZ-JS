@@ -1,43 +1,30 @@
-// ! Задание 1
-// const phone = "+7 (550) 225-456"
-// let phoneCountry
-// if (phone.startsWith("+996")) {
-//   phoneCountry = "KG"
-// } else if (phone.startsWith("+7")) {
-//   phoneCountry = "KZ"
-// } else if (phone.startsWith("+1")) {
-//   phoneCountry = "US"
-// }
-// console.log(phoneCountry)
-// ! Задание 2
-// let year = 1995
-// let isAlmostLeapYear
+// ! Задание №1
+function factorial(n) {
+  if (n < 0) {
+    console.log("Факториал отрицательного числа не существует.")
+    return
+  }
+  let result = 1
+  for (let i = 1; i <= n; i++) {
+    result *= i
+  }
+  console.log(result)
+}
 
-// if (year % 4 === 0 && year % 100 !== 0 && (year + 1) % 4 === 0) {
-//   isAlmostLeapYear = true
-// } else {
-//   isAlmostLeapYear = false
-// }
+factorial(5)
 
-// console.log(isAlmostLeapYear)
+//! Задание №2
 
-// ! Задание 3
+function isPalindrome(str) {
+  str = str.toLowerCase().replace(/[^a-z0-9]/g, "")
+  const reversedStr = str.split("").reverse().join("")
 
-// let num = 35
-// let result
+  if (str === reversedStr) {
+    console.log("Строка является палиндромом.")
+  } else {
+    console.log("Строка не является палиндромом.")
+  }
+  
+}
 
-// switch (true) {
-//   case num % 7 === 0 && num % 5 === 0:
-//     result = "Семь и пять!"
-//     break
-//   case num % 7 === 0:
-//     result = "Семёрка!"
-//     break
-//   case num % 5 === 0:
-//     result = "Пятёрка!"
-//     break
-//   default:
-//     result = "Обычное число"
-// }
-
-// console.log(result)
+isPalindrome("A man, a plan, a canal, Panama")
