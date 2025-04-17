@@ -1,30 +1,23 @@
-// ! Задание №1
-function factorial(n) {
-  if (n < 0) {
-    console.log("Факториал отрицательного числа не существует.")
-    return
-  }
-  let result = 1
-  for (let i = 1; i <= n; i++) {
-    result *= i
-  }
-  console.log(result)
+function isDivisible(n, x, y) {
+  return n % x === 0 && n % y === 0
 }
+function filterArray(arr) {
+  let div = []
+  let negativeDiv = []
+  let others = []
 
-factorial(5)
+  for (let i = 0; i < arr.length; i++) {
+    let num = arr[i]
 
-//! Задание №2
-
-function isPalindrome(str) {
-  str = str.toLowerCase().replace(/[^a-z0-9]/g, "")
-  const reversedStr = str.split("").reverse().join("")
-
-  if (str === reversedStr) {
-    console.log("Строка является палиндромом.")
-  } else {
-    console.log("Строка не является палиндромом.")
+    if (num > 0 && num % 2 === 0) {
+      div.push(num)
+    } else if (num < 0 && num % 3 === 0) {
+      negativeDiv.push(num)
+    } else {
+      others.push(num)
+    }
   }
-  
-}
 
-isPalindrome("A man, a plan, a canal, Panama")
+  return [div, negativeDiv, others]
+}
+console.log(filterArray([1, 3, 2, -6, -9, -10, 10]))
