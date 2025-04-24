@@ -1,23 +1,17 @@
-function isDivisible(n, x, y) {
-  return n % x === 0 && n % y === 0
-}
-function filterArray(arr) {
-  let div = []
-  let negativeDiv = []
-  let others = []
+function checkDivisibility(dividend, ...divisors) {
+  const result = {
+    divisible: [],
+    notDivisible: [],
+  }
 
-  for (let i = 0; i < arr.length; i++) {
-    let num = arr[i]
-
-    if (num > 0 && num % 2 === 0) {
-      div.push(num)
-    } else if (num < 0 && num % 3 === 0) {
-      negativeDiv.push(num)
+  for (let i = 0; i < divisors.length; i++) {
+    if (dividend % divisors[i] === 0) {
+      result.divisible.push(divisors[i])
     } else {
-      others.push(num)
+      result.notDivisible.push(divisors[i])
     }
   }
 
-  return [div, negativeDiv, others]
+  return result
 }
-console.log(filterArray([1, 3, 2, -6, -9, -10, 10]))
+console.log(checkDivisibility(15, 3, 5, 4, 7))
