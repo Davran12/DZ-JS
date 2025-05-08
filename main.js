@@ -1,14 +1,19 @@
-// const celsiusTemperatures = [0, 25, 30, -5, 15]
+function findMinValueInObjects(objects) {
+  return Math.min(...objects.map((obj) => obj.value))
+}
+function splitEvenOdd(numbers) {
+  const result = {even: [], odd: []}
+  for (const num of numbers) {
+    if (num % 2 === 0) {
+      result.even.push(num)
+    } else {
+      result.odd.push(num)
+    }
+  }
+  return result
+}
+const objects7 = [{value: 10}, {value: 5}, {value: 20}]
+console.log("7. Минимальное значение:", findMinValueInObjects(objects7)) // 5
 
-// function convert(arr) {
-//   return arr.map((temp) => (temp * 9) / 5 + 32)
-// }
-
-// const result = convert(celsiusTemperatures)
-// console.log(result)
-
-// const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-// const result = numbers.filter((num) => num % 3 === 0 && num % 9 === 0)
-
-// console.log(result)
+const numbers8 = [1, 2, 3, 4, 5]
+console.log("8. Чётные и нечётные:", splitEvenOdd(numbers8))
