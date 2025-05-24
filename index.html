@@ -1,45 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DOM Tasks</title>
-    <script defer src="main.js"></script>
+    <title>Список с добавлением и удалением</title>
     <style>
+      /* Стили для наглядности (можно менять) */
       body {
         font-family: Arial, sans-serif;
-        padding: 20px;
-      }
-      ul {
-        list-style: none;
-        padding: 0;
+        max-width: 500px;
+        margin: 20px auto;
       }
       li {
-        padding: 8px;
-        margin: 4px;
-        border: 1px solid #ddd;
+        margin: 5px 0;
+        display: flex;
+        justify-content: space-between;
+      }
+      .delete-btn {
+        margin-left: 10px;
+        color: red;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <h1>Задача 1: Раскрасить существующие li</h1>
-    <ul id="numbers-list">
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
-      <li>10</li>
-    </ul>
+    <h2>Добавление элементов в список</h2>
 
-    <h1>Задача 2: Найти div с "Hello" (без "world")</h1>
-    <div class="message">Hello world</div>
-    <div class="message">Hello</div>
-    <div class="message">Hello world</div>
-    <div class="message">Привет</div>
+    <!-- Условия задания (раскомментировать для работы) -->
+    <!-- 
+    1. Пользователь вводит текст в поле и нажимает "Добавить" — элемент добавляется в список.
+    2. Каждый элемент списка должен иметь кнопку "Удалить", которая удаляет только этот элемент.
+    3. Кнопка "Очистить" удаляет ВСЕ элементы списка.
+  -->
+
+    <input type="text" id="itemInput" placeholder="Введите элемент" />
+    <button id="addBtn">Добавить</button>
+    <button id="clearBtn">Очистить список</button>
+    <ul id="itemList"></ul>
+
+    <!-- Скрипт писать здесь или в отдельном файле -->
+    <script>
+      const addBtn = document.getElementById("addBtn")
+      const clearBtn = document.getElementById("clearBtn")
+      const itemInput = document.getElementById("itemInput")
+      const itemList = document.getElementById("itemList")
+
+      addBtn.addEventListener("click", () => {
+        const text = itemInput.value.trim()
+        if (text !== "") {
+          const li = document.createElement("li")
+          li.textContent = text
+
+          const deleteBtn = document.createElement("span")
+          deleteBtn.textContent = "Удалить"
+          deleteBtn.className = "delete-btn"
+
+          deleteBtn.addEventListener("click", () => {
+            itemList.removeChild(li)
+          })
+
+          li.appendChild(deleteBtn)
+          itemList.appendChild(li)
+
+          itemInput.value = ""
+        }
+      })
+
+      clearBtn.addEventListener("click", () => {
+        itemList.innerHTML = ""
+      })
+    </script>
   </body>
 </html>
