@@ -1,72 +1,50 @@
-async function sequencePromises(funcs) {
-  const results = []
+const div1 = document.getElementById("div1")
+const div2 = document.getElementById("div2")
 
+async function fetchPosts() {
   try {
-    for (const fn of funcs) {
-      const result = await fn()
-      results.push(result)
-    }
-    return results
-  } catch (e) {
-    return null
-  }
-}
-
-const promise1 = () => Promise.resolve(1)
-const promise2 = () => Promise.resolve(2)
-const promise3 = () => Promise.reject("Error")
-
-sequencePromises([promise1, promise2]).then(console.log) // [1, 2]
-
-sequencePromises([promise1, promise3, promise2]).then(console.log) // null
-
-// --------------------------------------------------------
-
-async function fetchUserPosts(userId) {
-  try {
-    const response = await fetch(
-      `https://jsonplaceholder.typicode.com/posts?userId=${userId}`
-    )
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok")
-    }
-
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts")
     const posts = await response.json()
-    return posts
-  } catch (error) {
-    return "Failed to fetch posts"
-  }
-}
 
-fetchUserPosts(1).then(console.log)
-fetchUserPosts(9999).then(console.log)
+    posts.forEach((post) => {
+      const postEl = document.createElement("div")
+      postEl.classList.add("post")
 
-async function createNewPost(postData) {
-  try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-      method: "POST",
-      body: JSON.stringify(postData),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      postEl.innerHTML = `
+                <h3>${post.title}</h3>
+                <p>${post.body}</p>
+                <button class="btn" data-id="${post.id}">Подробнее</button>
+            `
+
+      div1.appendChild(postEl)
     })
 
-    if (!response.ok) {
-      throw new Error("Request failed")
-    }
-
-    const data = await response.json()
-    return data
+    div1.addEventListener("click", async (e) => {
+      if (e.target.classList.contains("btn")) {
+        const id = e.target.getAttribute("data-id")
+        await fetchPostById(id)
+      }
+    })
   } catch (error) {
-    return {error: "Failed to create post"}
+    console.error("Ошибка при загрузке постов:", error)
   }
 }
 
-const newPost = {
-  title: "New Post",
-  body: "This is a new post",
-  userId: 1,
+async function fetchPostById(id) {
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${id}`
+    )
+    const post = await response.json()
+
+    div2.innerHTML = `
+            <h2>Детали поста #${post.id}</h2>
+            <h3>${post.title}</h3>
+            <p>${post.body}</p>
+        `
+  } catch (error) {
+    console.error("Ошибка при загрузке поста:", error)
+  }
 }
 
-createNewPost(newPost).then(console.log).catch(console.error)
+fetchPosts()
